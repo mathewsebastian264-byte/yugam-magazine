@@ -263,7 +263,6 @@ export const Navbar: React.FC = () => {
 
         </div>
       )}
-      </header>
 
       {/* Global Search Dialog */}
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
