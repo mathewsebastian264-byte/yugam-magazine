@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 
@@ -113,6 +114,9 @@ export const App: React.FC = () => {
 
       {/* Hide public Footer on Admin pages */}
       {!isAdminRoute && <Footer />}
+      
+      {/* Vercel Web Analytics */}
+      <Analytics />
     </div>
   );
 };
