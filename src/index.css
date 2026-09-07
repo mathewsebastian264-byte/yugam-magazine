@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: #FAF8F4;
+    color: #120F0C;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  h1, h2, h3, h4, .font-serif-heading {
+    font-family: 'Playfair Display', Georgia, Cambria, serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Fluid Typography Classes using clamp */
+.display-hero {
+  font-size: clamp(2.5rem, 6vw + 1rem, 5.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.display-section {
+  font-size: clamp(2rem, 4vw + 0.5rem, 3.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.subheading-editorial {
+  font-size: clamp(1rem, 1.5vw + 0.5rem, 1.35rem);
+  line-height: 1.4;
+}
+
+.body-editorial {
+  font-size: clamp(0.9375rem, 0.4vw + 0.85rem, 1.125rem);
+  line-height: 1.75;
+}
+
+/* Editorial Paper Texture Accent */
+.paper-bg {
+  background-color: #F8F5EE;
+  background-image: radial-gradient(#C5A059 0.75px, transparent 0.75px), radial-gradient(#C5A059 0.75px, #F8F5EE 0.75px);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
+  background-blend-mode: multiply;
+  opacity: 0.95;
+}
+
+.dark-paper-bg {
+  background-color: #0E0D0B;
+  background-image: radial-gradient(rgba(197, 160, 89, 0.18) 0.75px, transparent 0.75px);
+  background-size: 28px 28px;
+}
+
+/* Custom Editorial Scrollbar */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #FAF8F4;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #DDD2BF;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #C5A059;
+  }
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Editorial Dropcap */
+.editorial-dropcap::first-letter {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  line-height: 0.8;
+  float: left;
+  margin-right: 0.6rem;
+  margin-top: 0.2rem;
+  color: #C5A059;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .editorial-dropcap::first-letter {
+    font-size: 2.75rem;
+    margin-right: 0.45rem;
+  }
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
