@@ -156,80 +156,113 @@ export const Navbar: React.FC = () => {
 
               {/* Mobile Menu Trigger */}
               <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="p-2 rounded-xl bg-[#F4EFE6] text-[#120F0C] hover:bg-[#EAE2D3] border border-[#DDD2BF] lg:hidden transition-colors"
-                aria-label="Toggle navigation"
+                type="button"
+                onClick={() => setIsMenuOpen(true)}
+                className="p-2.5 rounded-xl bg-[#F4EFE6] text-[#120F0C] hover:bg-[#EAE2D3] active:bg-[#DDD2BF] border border-[#DDD2BF] lg:hidden transition-all flex items-center justify-center cursor-pointer shadow-sm"
+                aria-label="Open mobile menu"
               >
-                {isMenuOpen ? <X className="w-6 h-6 stroke-[2.5]" /> : <Menu className="w-6 h-6 stroke-[2.5]" />}
+                <Menu className="w-6 h-6 stroke-[2.5]" />
               </button>
             </div>
 
           </div>
         </div>
+      </header>
 
-        {/* 📱 Full-Screen Editorial Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="lg:hidden fixed inset-0 top-[56px] sm:top-[62px] z-50 bg-[#0E0D0B] text-[#FAF8F4] overflow-y-auto flex flex-col justify-between p-6 animate-in fade-in duration-200">
-            
-            <div className="space-y-6">
-              {/* Mobile Menu Header with Logo */}
-              <div className="flex items-center justify-between pb-4 border-b border-stone-800">
+      {/* 📱 Full-Screen Editorial Mobile Navigation Overlay (Independent Portal) */}
+      {isMenuOpen && (
+        <div className="lg:hidden fixed inset-0 z-[100] h-[100dvh] w-full bg-[#0A0806] text-[#FAF8F4] flex flex-col justify-between overflow-y-auto overscroll-contain p-5 sm:p-6 animate-in fade-in duration-200">
+          
+          <div className="space-y-6">
+            {/* Mobile Drawer Top Bar */}
+            <div className="flex items-center justify-between pb-4 border-b border-stone-800 shrink-0">
+              <div className="flex items-center gap-3">
                 <img
                   src="/images/yugam-logo.png"
                   alt="YUGAM"
                   className="h-10 w-auto object-contain brightness-0 invert"
                 />
-                <span className="text-xs font-mono text-[#D8B572] bg-[#1C1814] px-2.5 py-1 rounded border border-[#C5A059]/30">
-                  Volume 2025–26
+                <span className="text-[10px] font-mono text-[#D8B572] bg-[#1C1814] px-2.5 py-1 rounded border border-[#C5A059]/30 uppercase font-bold">
+                  2025–26
                 </span>
               </div>
 
-              {/* Main Links with Large Typography */}
-              <nav className="space-y-2.5">
-                {navLinks.map((link, idx) => {
-                  const isActive = location.pathname === link.path;
-                  return (
-                    <Link
-                      key={link.name}
-                      to={link.path}
-                      className={`flex items-center justify-between p-3.5 rounded-2xl transition-all border ${
-                        isActive
-                          ? 'bg-[#C5A059] text-[#0A0806] border-[#C5A059] font-bold'
-                          : 'bg-[#161410] text-[#FAF8F4] border-stone-800/80 hover:bg-[#1C1814]'
-                      }`}
-                    >
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-mono opacity-60">0{idx + 1}</span>
-                          <span className="font-serif text-lg sm:text-xl font-bold">{link.name}</span>
-                        </div>
-                        <p className="text-xs opacity-75 mt-0.5 font-sans">{link.desc}</p>
-                      </div>
-                      <ChevronRight className="w-5 h-5 opacity-70" />
-                    </Link>
-                  );
-                })}
-              </nav>
-            </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setIsSearchOpen(true);
+                  }}
+                  className="p-2.5 rounded-xl bg-[#161410] border border-stone-800 text-[#D8B572] hover:bg-[#C5A059] hover:text-[#0A0806] transition-colors"
+                  title="Search"
+                >
+                  <Search className="w-4 h-4" />
+                </button>
 
-            {/* Bottom Mobile Reader Banner */}
-            <div className="pt-6 mt-6 border-t border-stone-800 space-y-4">
-              <Link
-                to="/archive"
-                className="w-full py-3.5 px-5 rounded-2xl bg-[#C5A059] hover:bg-[#D8B572] text-[#0A0806] font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2.5 shadow-gold-glow"
-              >
-                <BookOpen className="w-4 h-4" />
-                <span>Open Full 76-Page Digital Edition</span>
-              </Link>
-
-              <div className="text-center text-xs text-stone-400 space-y-0.5 font-sans">
-                <p className="font-serif font-bold text-white">{magazineInfo.collegeName}</p>
-                <p className="text-[11px] font-mono text-[#D8B572]">{magazineInfo.accreditation}</p>
+                <button
+                  type="button"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-2.5 rounded-xl bg-[#C5A059] text-[#0A0806] hover:bg-[#D8B572] transition-transform active:scale-95 flex items-center justify-center font-bold shadow-md cursor-pointer"
+                  aria-label="Close menu"
+                >
+                  <X className="w-5 h-5 stroke-[3]" />
+                </button>
               </div>
             </div>
 
+            {/* Navigation Links with High-Contrast Editorial Cards */}
+            <nav className="space-y-2">
+              {navLinks.map((link, idx) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`flex items-center justify-between p-3.5 rounded-2xl transition-all border active:scale-[0.99] ${
+                      isActive
+                        ? 'bg-[#C5A059] text-[#0A0806] border-[#C5A059] font-bold shadow-md'
+                        : 'bg-[#14120F] text-[#FAF8F4] border-stone-800 hover:bg-[#1E1A15] hover:border-[#C5A059]/40'
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-center gap-2.5">
+                        <span className={`text-xs font-mono font-bold ${isActive ? 'text-[#0A0806]' : 'text-[#C5A059]'}`}>
+                          0{idx + 1}
+                        </span>
+                        <span className="font-serif text-lg font-bold">{link.name}</span>
+                      </div>
+                      <p className={`text-xs mt-0.5 font-sans ${isActive ? 'text-[#2A2520]' : 'text-stone-400'}`}>
+                        {link.desc}
+                      </p>
+                    </div>
+                    <ChevronRight className={`w-5 h-5 ${isActive ? 'text-[#0A0806]' : 'text-[#C5A059]'}`} />
+                  </Link>
+                );
+              })}
+            </nav>
           </div>
-        )}
+
+          {/* Bottom Reader Action Banner */}
+          <div className="pt-6 mt-6 border-t border-stone-800 space-y-4 shrink-0 pb-4">
+            <Link
+              to="/archive"
+              onClick={() => setIsMenuOpen(false)}
+              className="w-full py-3.5 px-5 rounded-2xl bg-[#C5A059] hover:bg-[#D8B572] active:bg-[#9E7628] text-[#0A0806] font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2.5 shadow-gold-glow transition-all"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span>Open 76-Page Digital Reader</span>
+            </Link>
+
+            <div className="text-center text-xs text-stone-400 space-y-0.5 font-sans">
+              <p className="font-serif font-bold text-white">{magazineInfo.collegeName}</p>
+              <p className="text-[11px] font-mono text-[#D8B572]">{magazineInfo.accreditation}</p>
+            </div>
+          </div>
+
+        </div>
+      )}
       </header>
 
       {/* Global Search Dialog */}
